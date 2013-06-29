@@ -11,7 +11,7 @@ define([ "ember", "api/testAPI" ], function(Ember, apiBase) {
 		{
 			var remoteAPI = new apiBase()
 			self = this
-			remoteAPI.load().done(function(data){
+			return remoteAPI.load().done(function(data){
 				self.set('username',data.name)
 			});
 		}

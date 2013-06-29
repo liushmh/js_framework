@@ -1,11 +1,14 @@
-define(['ember', 'api/testAPI', 'QUnit'], function(ember, testAPI, QUnit) {
+define(['api/testAPI', 'QUnit'], function(testAPI, QUnit) {
 
 	var run = function() {
-		test('jsut for testing', function() {
+		asyncTest('jsut for testing', function() {
+			
 			api = new testAPI();
 			api.load().done(function(data){
 				equal(data.name, 'CHATEAU DE SAINT COSME');
+				start();
 		});
+		
 		});
 	};
 
