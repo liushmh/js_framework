@@ -1,0 +1,21 @@
+<script src="http://cdn.alloyui.com/2.0.0pr5/aui/aui-min.js"></script>
+<link rel="stylesheet" href="http://alloyui.com/carousel/css/basic.css">
+<div id="myCarousel">
+  <div class="aui-carousel-item" style="background: url(http://farm6.staticflickr.com/5494/9177025685_f35d8c8255_c.jpg);"></div>
+  <div class="aui-carousel-item" style="background: url(http://farm8.staticflickr.com/7454/9179242144_7354751de6_z.jpg);"></div>
+</div>
+
+<script type="text/javascript">
+YUI().use(
+  'aui-carousel',
+  function(Y) {
+    new Y.Carousel(
+      {
+        contentBox: '#myCarousel',
+        height: 300,
+        width: 500
+      }
+    ).render();
+  }
+);
+</script>

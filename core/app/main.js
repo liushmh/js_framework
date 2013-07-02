@@ -1,14 +1,15 @@
-define([
-        "controllers/indexController", 
-        "router"], 
-function(
-		indexController, 
-		Router) {
+define(["require","ember", "router","controllers/loginController"], function(require, ember, router) {
+	
+	if (window.App != undefined) return window.App;
+	
 	/*Module Pattern*/
-	var App = {
-
-		Router : Router,
-		IndexController : indexController
+	var appConfig = {
+		Router : router,
+		LoginController: require("controllers/loginController")
 	};
-	return App;
+
+	window.App = ember.Application.create(appConfig);
+	window.App.Bootstrap = window.Bootstrap;
+
+	return window.App;
 });

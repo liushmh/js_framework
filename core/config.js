@@ -6,6 +6,7 @@ define({
 			deps: ['handlebars', 'jquery'],
 			exports: 'Ember'
 		},
+		'ember_validations':['ember'],
 		'QUnit': {
 	           exports: 'QUnit',
 	           init: function() {
@@ -28,6 +29,7 @@ define({
 		'jquery': 'libs/jquery.min',
 		'handlebars': 'libs/handlebars',
 		'ember_bootstrap': 'libs/ember-bootstrap.min',
+		'ember_validations': 'libs/ember-validations.min',
 		'ember': 'libs/ember',
 		'QUnit':'libs/qunit',
 		
