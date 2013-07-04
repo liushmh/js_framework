@@ -1,0 +1,85 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.3.5/knockout.mapping.js"></script>
+
+<script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-carousel.js"></script>
+
+<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css">
+<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css">
+<link href="http://twitter.github.io/bootstrap/assets/css/docs.css" rel="stylesheet">
+<link href="http://twitter.github.io/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+
+<div class="well">
+	<div id="menuBlock" style="width:200px">
+
+		<ul class="nav nav-list" data-bind="foreach:workList">
+			<li data-bind="css:cssClass()">
+				<a data-bind="text:title(),click:$parent.changeType" href="#"></a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="workBlock" style="width:600px">
+		<h1 data-bind="text:title()"></h1>
+		<div id="myCarousel" class="carousel slide" >
+			<ol id="iconCarousel" class="carousel-indicators" data-bind="foreach:images">
+				<li data-target="#myCarousel" data-bind="attr:{'data-slide-to':id}"></li>
+			</ol>
+			<!-- Carousel items -->
+			<div id="innerCarousel" class="carousel-inner" data-bind="foreach:images">
+				<div class="item">
+					<img data-bind="attr:{src:url}"></img>
+				</div>
+
+			</div>
+			<!-- Carousel nav -->
+			<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+			<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var imgVM = ko.observable();
+	var createSet = function(set) {
+		var result = ko.mapping.fromJS(set);
+		result.cssClass = ko.observable('');
+		return result;
+	};
+
+	var mapping = {
+
+		create : function(options) {
+			//customize at the root level.
+			return createSet(options.data)
+			//can call ko.mapping.fromJS on the options.data as well and then customize it
+		}
+	};
+
+	$(function() {
+		$.get('sites/all/modules/flickr/work_photoset.json').success(function(data) {
+			imageBootstrapCarousel.workList = ko.mapping.fromJS(data, mapping);
+			imgVM(imageBootstrapCarousel.workList()[0]);
+
+			ko.applyBindings(imgVM, $("#workBlock")[0]);
+			ko.applyBindings(imageBootstrapCarousel, $("#menuBlock")[0]);
+
+			$('.carousel').carousel();
+			$('.carousel').carousel('next');
+		});
+	})
+	var imageBootstrapCarousel = {
+
+		workList : ko.observableArray(),
+
+		changeType : function(data) {
+
+			imgVM().cssClass('');
+			data.cssClass('active');
+			imgVM(data);
+			$('.carousel').carousel('next');
+		}
+	};
+
+</script>
+

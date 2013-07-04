@@ -1,12 +1,13 @@
 define({
 	app_name: "TTUP",
-	
+	out:'build/main.js',
 	shim : {
 		'ember' : {
 			deps: ['handlebars', 'jquery'],
 			exports: 'Ember'
 		},
 		'ember_validations':['ember'],
+		'ember_bootstrap':['ember'],
 		'QUnit': {
 	           exports: 'QUnit',
 	           init: function() {

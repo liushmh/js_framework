@@ -1,21 +1,87 @@
 <script src="http://cdn.alloyui.com/2.0.0pr5/aui/aui-min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+
 <link rel="stylesheet" href="http://alloyui.com/carousel/css/basic.css">
-<div id="myCarousel">
-  <div class="aui-carousel-item" style="background: url(http://farm6.staticflickr.com/5494/9177025685_f35d8c8255_c.jpg);"></div>
-  <div class="aui-carousel-item" style="background: url(http://farm8.staticflickr.com/7454/9179242144_7354751de6_z.jpg);"></div>
+
+<div id="koBlock">
+	<h1 data-bind="text: title"></h1>
+	<div id="myCarousel" data-bind="foreach:images">
+		<div class="aui-carousel-item" data-bind="style:{background:url, height:height, width:width}"></div>
+	</div>
+</div>
+<div id="menuBlock">
+	<div id="myTab">
+
+		<ul class="aui-nav aui-nav-tabs" data-bind="foreach:imgList">
+			<li data-bind="text:title, click:$parent.changeType">
+
+			</li>
+		</ul>
+	</div>
 </div>
 
 <script type="text/javascript">
-YUI().use(
-  'aui-carousel',
-  function(Y) {
-    new Y.Carousel(
-      {
-        contentBox: '#myCarousel',
-        height: 300,
-        width: 500
-      }
-    ).render();
-  }
-);
+	var imageCarousel = {
+
+		imgList : [{
+			title : 'walkout entrance',
+			images : [{
+				url : 'url(http://farm6.staticflickr.com/5494/9177025685_f35d8c8255_c.jpg)',
+				desc : '',
+				height : '700px',
+				width : '500px'
+			}, {
+				url : 'url(http://farm8.staticflickr.com/7454/9179242144_7354751de6_c.jpg)',
+				desc : '',
+				height : '700px',
+				width : '500px'
+			}]
+		}, {
+			title : 'waterproofing',
+			images : [{
+				url : 'url(http://farm4.staticflickr.com/3722/9176918651_da047f442b_c.jpg)',
+				desc : '',
+				height : '700px',
+				width : '500px'
+			}, {
+				url : 'url(http://farm3.staticflickr.com/2805/9179130810_6b9c6a3296_c.jpg)',
+				desc : '',
+				height : '700px',
+				width : '500px'
+			}, {
+				url : 'url(http://farm4.staticflickr.com/3722/9176918015_0c1d187e42_c.jpg)',
+				desc : '',
+				height : '700px',
+				width : '500px'
+			}]
+
+		}],
+
+		changeType : function(data) {
+			console.log(data.title)
+			
+			imgVM(data);
+			YUI().use('aui-carousel', function(Y) {
+				new Y.Carousel({
+					contentBox : '#myCarousel',
+					height : 700,
+					width : 500
+				}).render();
+			});
+		}
+	}
+
+	var imgVM = ko.observable(imageCarousel.imgList[0]);
+
+	ko.applyBindings(imgVM, $("#koBlock")[0]);
+	ko.applyBindings(imageCarousel, $("#menuBlock")[0]);
+
+	YUI().use('aui-carousel', function(Y) {
+		new Y.Carousel({
+			contentBox : '#myCarousel',
+			height : 700,
+			width : 500
+		}).render();
+	}); 
 </script>
